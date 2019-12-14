@@ -15,6 +15,8 @@ class Board:
     player2 = None
     currentTurn = None
     playerSwap = False
+    player1Score = 0
+    player2Score = 0
 
     def BuildNodes(self):            
         for y in range (0, self.ysize):
@@ -80,6 +82,18 @@ class Board:
             elif self.currentTurn.GetPlayerID() == 2:
                 self.currentTurn = self.player1
             self.playerSwap = False
+        self.ScoreCheck()
+
+    def ScoreCheck(self):
+        p1score = 0
+        p2score = 0
+        for node in self.nodeList:
+            if node.m_player == 1:
+                p1score += 1
+            elif node.m_player == 2:
+                p2score += 1
+        self.player1Score = p1score
+        self.player2Score = p2score
 
     def PlayerSelectNode(self, cords, playerid):
         node = self.GetSelectedNode(cords)
@@ -211,8 +225,121 @@ class Board:
 
 
     def DiagonalLineCheck(self, cords, playerid):
-        validMove = True
-        #diagnal Top Left
+
+        validMove = False
+        nodes = []
+        #Down and Right
+        y = cords[1]
+        if y < self.ysize - 1:
+            for x in range (cords[0] + 1, self.xsize):
+                y += 1
+                checkNode = self.GetSelectedNode((x, y))
+                if checkNode.m_player == self.currentTurn.GetPlayerID():
+                    break
+                elif checkNode.m_player == 0:
+                    nodes = []
+                    break
+                elif x == self.xsize -1 and checkNode.m_player != playerid:
+                    nodes = []
+                    break
+                elif y == self.ysize -1 and checkNode.m_player != playerid:
+                    nodes = []
+                    break
+                else:
+                    nodes.append((x,y))
+
+            if len(nodes) >= 1:
+                nodes.append(cords)
+                self.ModChip(nodes, self.currentTurn.GetPlayerID())
+                validMove = True
+                nodes = []
+            else:
+                nodes = []
+
+        # Up and Left
+        y = cords[1]
+        if y > 0:
+            for x in range (cords[0] -1, 0, -1):
+                y += -1
+                checkNode = self.GetSelectedNode((x, y))
+                if checkNode.m_player == self.currentTurn.GetPlayerID():
+                    break
+                elif checkNode.m_player == 0:
+                    nodes = []
+                    break
+                elif x == 0 and checkNode.m_player != playerid:
+                    nodes = []
+                    break
+                elif y == 0 and checkNode.m_player != playerid:
+                    nodes = []
+                    break
+                else:
+                    nodes.append((x,y))
+
+            if len(nodes) >= 1:
+                nodes.append(cords)
+                self.ModChip(nodes, self.currentTurn.GetPlayerID())
+                validMove = True
+                nodes = []
+            else:
+                nodes = []
+
+        #Up and Right
+        y = cords[1]
+        if y > 0:
+            for x in range (cords[0] + 1, self.xsize):
+                y += -1
+                checkNode = self.GetSelectedNode((x, y))
+                if checkNode.m_player == self.currentTurn.GetPlayerID():
+                    break
+                elif checkNode.m_player == 0:
+                    nodes = []
+                    break
+                elif x == self.xsize - 1 and checkNode.m_player != playerid:
+                    nodes = []
+                    break
+                elif y == 0 and checkNode.m_player != playerid:
+                    nodes = []
+                    break
+                else:
+                    nodes.append((x,y))
+
+            if len(nodes) >= 1:
+                nodes.append(cords)
+                self.ModChip(nodes, self.currentTurn.GetPlayerID())
+                validMove = True
+                nodes = []
+            else:
+                nodes = []
+
+        #Down and Left
+        y = cords[1]
+        if y < self.ysize - 1:
+            for x in range (cords[0] -1, 0, -1):
+                y += 1
+                checkNode = self.GetSelectedNode((x, y))
+                if checkNode.m_player == self.currentTurn.GetPlayerID():
+                    break
+                elif checkNode.m_player == 0:
+                    nodes = []
+                    break
+                elif x == 0 and checkNode.m_player != playerid:
+                    nodes = []
+                    break
+                elif y == self.ysize -1 and checkNode.m_player != playerid:
+                    nodes = []
+                    break
+                else:
+                    nodes.append((x,y))
+
+            if len(nodes) >= 1:
+                nodes.append(cords)
+                self.ModChip(nodes, self.currentTurn.GetPlayerID())
+                validMove = True
+                nodes = []
+            else:
+                nodes = []
+
         
 
         return validMove
@@ -222,8 +349,8 @@ class Board:
         trueValid = False
         if(self.GetSelectedNode(cords).m_player == 0):
             valid = []
-            valid[0] = self.StraightLineCheck(cords, playerid)
-            valid[1] = self.DiagonalLineCheck(cords, playerid)
+            valid.append(self.StraightLineCheck(cords, playerid))
+            valid.append(self.DiagonalLineCheck(cords, playerid))
 
             if (valid[0] or valid[1]):
                 trueValid = True
