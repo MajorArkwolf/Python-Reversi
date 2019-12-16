@@ -3,7 +3,8 @@ class GameStack:
     stackSize = 0
 
     def Event(self, event):
-        self.gamestack[self.stackSize - 1].Event(event)
+        if self.stackSize > 0:
+            self.gamestack[self.stackSize - 1].Event(event)
 
 
     def AddToStack(self, newItem):
@@ -19,7 +20,7 @@ class GameStack:
             self.gamestack[self.stackSize - 1].Update()
 
     def PopToStack(self):
-        self.gamestack.pop()
+        del self.gamestack[self.stackSize - 1]
         self.stackSize -= 1
     
     def EmptyStack(self):

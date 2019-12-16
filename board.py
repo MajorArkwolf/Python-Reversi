@@ -10,7 +10,6 @@ class Board:
     ysize = 0
     boardSize = 0
     padding = 0
-    selectedNode = 0
     player1 = None
     player2 = None
     currentTurn = None
@@ -21,8 +20,7 @@ class Board:
     def BuildNodes(self):            
         for y in range (0, self.ysize):
             for x in range (0, self.xsize):
-                node = Node(x, y)
-                self.nodeList.append(node)
+                self.nodeList.append(Node(x, y, 0))
 
     def CalcXPadding(self, size):
         return int((size[0] - self.boardSize) / 2)
@@ -368,7 +366,6 @@ class Board:
         self.xsize = xsize
         self.ysize = ysize
         self.BuildNodes()
-        self.selectedNode == None
         location = ysize * int((xsize / 2)) + int((ysize / 2) -1)
         self.nodeList[location].ChangePlayer(2)
         location = ysize * int(xsize / 2) + int(ysize / 2)
@@ -377,3 +374,6 @@ class Board:
         self.nodeList[location].ChangePlayer(1)
         location = ysize * int((xsize / 2) - 1) + int(ysize / 2)
         self.nodeList[location].ChangePlayer(2)
+
+    def __del__(self):
+        del self.nodeList[:]

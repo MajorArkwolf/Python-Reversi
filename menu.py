@@ -65,8 +65,6 @@ class FontBox:
         self.textObject = self.txtobj.render(textName, 1, self.white)
        
         
-
-
 class Menu:
     white,black,green,dgreen = (255,255,255),(0,0,0),(79,185,8),(50,114,7)
 
@@ -94,10 +92,9 @@ class Menu:
     def Event(self, event):
         if pygame.mouse.get_pressed()[0] == True:
             if self.pg.ClickOn():
-                board = Board(8 , 8)
-                board.player1 = Player(1)
-                board.player2 = Player(2)
-                config.gamestack.AddToStack(board)
+                config.gamestack.AddToStack(Board(8 , 8))
+                config.gamestack.GetItem().player1 = Player(1)
+                config.gamestack.GetItem().player2 = Player(2)
             elif self.p1.ClickOn():
                 print("this will swapper")
             elif self.p2.ClickOn():
