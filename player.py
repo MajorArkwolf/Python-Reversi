@@ -1,11 +1,12 @@
 import pygame
+from pygame.locals import *
 from node import Node
 
 class Player:
 
     def OnLeftClick(self, mouse, board, size):
         cord = self.GetNodeCord(mouse, board, size)
-        print(cord)
+        #print(cord)
         if cord is not None:
             if board.AttemptMove(cord, self.playerid):
                 board.playerSwap = True

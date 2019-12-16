@@ -356,16 +356,23 @@ class Board:
                 trueValid = True
         return trueValid
 
-    def __init__(self, screen, xsize = 10, ysize = 10):
+    def Event(self, event):
+        if self.currentTurn.IsPlayer():
+            if pygame.mouse.get_pressed()[0] == True:
+                self = self.currentTurn.OnLeftClick(pygame.mouse.get_pos(), self, pygame.display.get_surface().get_size())
+            elif pygame.mouse.get_pressed()[2] == True:
+                self = self.currentTurn.OnRightClick(pygame.mouse.get_pos(), self, pygame.display.get_surface().get_size())
+
+    def __init__(self, xsize = 10, ysize = 10):
         self.xsize = xsize
         self.ysize = ysize
         self.BuildNodes()
         self.selectedNode == None
-        location = xsize * 4 + 3
+        location = ysize * int((xsize / 2)) + int((ysize / 2) -1)
         self.nodeList[location].ChangePlayer(2)
-        location = xsize * 4 + 4
+        location = ysize * int(xsize / 2) + int(ysize / 2)
         self.nodeList[location].ChangePlayer(1)
-        location = xsize * 3 + 3
+        location = ysize * int((xsize / 2) - 1) + int((ysize / 2) -1)
         self.nodeList[location].ChangePlayer(1)
-        location = xsize * 3 + 4
+        location = ysize * int((xsize / 2) - 1) + int(ysize / 2)
         self.nodeList[location].ChangePlayer(2)
