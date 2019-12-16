@@ -1,5 +1,6 @@
 from node import Node
 from player import Player
+from gamefont import FontBox
 
 import pygame
 
@@ -36,7 +37,10 @@ class Board:
         size = self.renderer.get_size()
         self.renderer.fill(self.black)
         self.DrawBoard(size)
-        self.DrawPeice(size)        
+        self.DrawPeice(size)
+        self.turnText.Draw(self.renderer)
+        self.whiteText.Draw(self.renderer)
+        self.blackText.Draw(self.renderer)
         pygame.display.flip()
 
     def DrawBoard(self, size):
@@ -78,10 +82,15 @@ class Board:
         if self.playerSwap == True:
             if self.currentTurn.GetPlayerID() == 1:
                 self.currentTurn = self.player2
+                self.turnText.ChangeText("Turn: Blacks")
             elif self.currentTurn.GetPlayerID() == 2:
                 self.currentTurn = self.player1
+                self.turnText.ChangeText("Turn: Whites")
             self.playerSwap = False
         self.ScoreCheck()
+        self.turnText.Update()
+        self.whiteText.Update()
+        self.blackText.Update()
 
     def ScoreCheck(self):
         p1score = 0
@@ -91,8 +100,10 @@ class Board:
                 p1score += 1
             elif node.m_player == 2:
                 p2score += 1
-        self.player1Score = p1score
-        self.player2Score = p2score
+        self.whiteText.ChangeText("White: " + str(p1score))
+        self.blackText.ChangeText("Black: " + str(p2score))
+        #self.player1Score = p1score
+        #elf.player2Score = p2score
 
     def PlayerSelectNode(self, cords, playerid):
         node = self.GetSelectedNode(cords)
@@ -212,6 +223,11 @@ class Board:
         self.nodeList[location].ChangePlayer(1)
         location = ysize * int((xsize / 2) - 1) + int(ysize / 2)
         self.nodeList[location].ChangePlayer(2)
+        self.turnText = FontBox("Turn: Whites", 40, pygame.display.get_surface().get_size())
+        self.whiteText = FontBox("White: 2", 40, pygame.display.get_surface().get_size())
+        self.whiteText.MoveText((0, 50))
+        self.blackText = FontBox("Black: 2", 40, pygame.display.get_surface().get_size())
+        self.blackText.MoveText((0, 100))
 
     def __del__(self):
         del self.nodeList[:]
