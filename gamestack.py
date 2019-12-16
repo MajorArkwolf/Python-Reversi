@@ -11,15 +11,16 @@ class GameStack:
         self.stackSize += 1
 
     def Draw(self):
-        
-        self.gamestack[self.stackSize - 1].Draw()
+        if self.stackSize > 0:
+            self.gamestack[self.stackSize - 1].Draw()
 
     def Update(self):
-        self.gamestack[self.stackSize - 1].Update()
+        if self.stackSize > 0:
+            self.gamestack[self.stackSize - 1].Update()
 
     def PopToStack(self):
         self.gamestack.pop()
-        self.stackSize -+ 1
+        self.stackSize -= 1
     
     def EmptyStack(self):
         if(self.stackSize <= 0):

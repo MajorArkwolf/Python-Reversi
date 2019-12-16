@@ -33,12 +33,13 @@ class Board:
     def CalcGridSize(self, size):
         return self.boardSize / self.xsize
 
-    def Draw(self, size, renderer):
-        self.renderer = renderer
+    def Draw(self):
+        self.renderer = pygame.display.get_surface()
+        size = self.renderer.get_size()
+        self.renderer.fill(self.black)
         self.DrawBoard(size)
         self.DrawPeice(size)        
         pygame.display.flip()
-        return self.renderer
 
     def DrawBoard(self, size):
         self.padding = 0.9
