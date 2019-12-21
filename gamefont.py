@@ -2,7 +2,7 @@ import pygame
 from pygame.locals import *
 
 class FontBox:
-    white,black,green,dgreen = (255,255,255),(0,0,0),(79,185,8),(50,114,7)
+    white, black, green, dark_green = (255, 255, 255), (0, 0, 0), (79, 185, 8), (50, 114, 7)
     minx = 0
     miny = 0
     maxx = 0
@@ -17,7 +17,7 @@ class FontBox:
         if screensize != self.oldsize and self.moveable:
             x = screensize[0] - self.oldsize[0]
             y = screensize[1] - self.oldsize[1]
-            newSize = [x , y]
+            newSize = [x, y]
             self.minx += int(newSize[0] / 2)
             self.maxx += int(newSize[0] / 2)
             self.miny += int(newSize[1] / 2)

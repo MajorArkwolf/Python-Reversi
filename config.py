@@ -1,2 +1,2 @@
 from gamestack import GameStack
-gamestack = GameStack()
+game_stack = GameStack()

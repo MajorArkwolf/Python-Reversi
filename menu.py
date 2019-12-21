@@ -4,8 +4,9 @@ import config
 from board import Board
 from player import Player
 
+
 class FontBox:
-    white,black,green,dgreen = (255,255,255),(0,0,0),(79,185,8),(50,114,7)
+    white, black, green, dgreen = (255, 255, 255), (0, 0, 0), (79, 185, 8), (50, 114, 7)
     minx = 0
     miny = 0
     maxx = 0
@@ -39,11 +40,10 @@ class FontBox:
         renderer.blit(self.textObject, (self.minx, self.miny))
 
     def MoveText(self, size):
-            self.maxx = size[0] + (self.maxx - self.minx)
-            self.maxy = size[1] + (self.maxy - self.miny)
-            self.minx = size[0]
-            self.miny = size[1]
-
+        self.maxx = size[0] + (self.maxx - self.minx)
+        self.maxy = size[1] + (self.maxy - self.miny)
+        self.minx = size[0]
+        self.miny = size[1]
 
     def GetSize(self):
         return (self.maxx, self.maxy)
@@ -63,10 +63,10 @@ class FontBox:
         self.maxy = size[1]
         self.text = textName
         self.textObject = self.txtobj.render(textName, 1, self.white)
-       
-        
+
+
 class Menu:
-    white,black,green,dgreen = (255,255,255),(0,0,0),(79,185,8),(50,114,7)
+    white, black, green, dark_green = (255, 255, 255), (0, 0, 0), (79, 185, 8), (50, 114, 7)
 
     def Draw(self):
         renderer = pygame.display.get_surface()
@@ -76,12 +76,11 @@ class Menu:
         self.p2.Draw(renderer)
         self.exit.Draw(renderer)
 
-
     def OffsetPoint(self, size):
         screensize = pygame.display.get_surface().get_size()
         x = int((screensize[0] - size[0]) / 2)
         y = int((screensize[1] - size[1]) / 2)
-        return (x, y)
+        return x, y
 
     def Update(self):
         self.pg.Update()
@@ -90,17 +89,17 @@ class Menu:
         self.exit.Update()
 
     def Event(self, event):
-        if pygame.mouse.get_pressed()[0] == True:
+        if pygame.mouse.get_pressed()[0]:
             if self.pg.ClickOn():
-                config.gamestack.AddToStack(Board(8 , 8))
-                config.gamestack.GetItem().player1 = Player(1)
-                config.gamestack.GetItem().player2 = Player(2)
+                config.game_stack.AddToStack(Board(8, 8))
+                config.game_stack.GetItem().player1 = Player(1)
+                config.game_stack.GetItem().player2 = Player(2)
             elif self.p1.ClickOn():
                 print("this will swapper")
             elif self.p2.ClickOn():
                 print("this will swapper2")
             elif self.exit.ClickOn():
-                config.gamestack.PopToStack()
+                config.game_stack.PopToStack()
 
     def __init__(self):
         renderer = pygame.display.get_surface()
@@ -109,8 +108,8 @@ class Menu:
         moveMe = self.OffsetPoint(self.pg.GetSize())
         self.pg.MoveText((moveMe[0], moveMe[1] / 4))
         self.p1 = FontBox("Player 1", size)
-        self.p1.MoveText((moveMe[0], ((moveMe[1] / 4 ) * 3)))
+        self.p1.MoveText((moveMe[0], ((moveMe[1] / 4) * 3)))
         self.p2 = FontBox("Player 2", size)
-        self.p2.MoveText((moveMe[0], ((moveMe[1] / 4 ) * 5)))
+        self.p2.MoveText((moveMe[0], ((moveMe[1] / 4) * 5)))
         self.exit = FontBox("Exit", size)
-        self.exit.MoveText((moveMe[0], ((moveMe[1] / 4 ) * 7)))
+        self.exit.MoveText((moveMe[0], ((moveMe[1] / 4) * 7)))
