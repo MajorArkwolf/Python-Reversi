@@ -278,17 +278,17 @@ class Board:
                 self.currentTurn.OnRightClick(pygame.mouse.get_pos(), self,
                                               pygame.display.get_surface().get_size())
 
-    def __init__(self, xsize=10, ysize=10):
-        self.x_size = xsize
-        self.y_size = ysize
+    def __init__(self, x_size=10, y_size=10):
+        self.x_size = x_size
+        self.y_size = y_size
         self.BuildNodes()
-        location = ysize * int((xsize / 2)) + int((ysize / 2) - 1)
+        location = y_size * int((x_size / 2)) + int((y_size / 2) - 1)
         self.nodeList[location].ChangePlayer(2)
-        location = ysize * int(xsize / 2) + int(ysize / 2)
+        location = y_size * int(x_size / 2) + int(y_size / 2)
         self.nodeList[location].ChangePlayer(1)
-        location = ysize * int((xsize / 2) - 1) + int((ysize / 2) - 1)
+        location = y_size * int((x_size / 2) - 1) + int((y_size / 2) - 1)
         self.nodeList[location].ChangePlayer(1)
-        location = ysize * int((xsize / 2) - 1) + int(ysize / 2)
+        location = y_size * int((x_size / 2) - 1) + int(y_size / 2)
         self.nodeList[location].ChangePlayer(2)
         self.turnText = FontBox("Turn: Whites", 40, pygame.display.get_surface().get_size())
         self.whiteText = FontBox("White: 2", 40, pygame.display.get_surface().get_size())
