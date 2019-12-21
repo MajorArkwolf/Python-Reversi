@@ -33,8 +33,12 @@ class FontBox:
             self.minx = size[0]
             self.miny = size[1]
 
-    def ChangeText(self, newText):
-        self.textObject = self.txtobj.render(newText, 1, self.white)
+    def ChangeText(self, newText, newColor = (255,255,255)):
+        self.textObject = self.txtobj.render(newText, 1, newColor)
+        self.txtobj = pygame.font.SysFont(newText, self.fontsize)
+        size = self.txtobj.size(newText)
+        self.maxx = size[0] + self.minx
+        self.maxy = size[1] + self.miny
 
     def GetSize(self):
         return (self.maxx, self.maxy)
@@ -42,8 +46,12 @@ class FontBox:
     def MakeMoveable(self, move):
         self.moveable = move
 
+    def ReturnMinMax(self):
+        return (self.maxx - self.minx, self.maxy - self.miny)
+
     def __init__(self, textName, fontsize, size):
-        self.txtobj = pygame.font.SysFont(textName, fontsize)
+        self.fontsize = fontsize
+        self.txtobj = pygame.font.SysFont(textName, self.fontsize)
         self.oldsize = size
         size = self.txtobj.size(textName)
         self.maxx = size[0]

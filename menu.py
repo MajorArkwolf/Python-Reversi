@@ -26,7 +26,7 @@ class FontBox:
             self.hover = False
 
         if screensize != self.oldsize:
-            newSize = [0 , 0]
+            newSize = [0, 0]
             newSize[0] = screensize[0] - self.oldsize[0]
             newSize[1] = screensize[1] - self.oldsize[1]
             self.minx += int(newSize[0] / 2)

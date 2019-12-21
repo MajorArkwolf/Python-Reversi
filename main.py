@@ -12,11 +12,7 @@ import config
 
 
 
-def WinCheck():
-    won = False
-    return won
-
-def main():    
+def main():
     config.gamestack = GameStack()
     pygame.display.set_mode((640, 480), pygame.RESIZABLE)
     pygame.display.set_caption("Reversi")
